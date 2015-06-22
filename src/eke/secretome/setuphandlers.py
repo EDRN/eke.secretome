@@ -6,7 +6,7 @@ from plone.dexterity.utils import createContentInContainer
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from ZODB.DemoStorage import DemoStorage
-import pkg_resources, csv, logging
+import pkg_resources, csv, logging, transaction
 
 _logger = logging.getLogger(__name__)
 
@@ -55,6 +55,7 @@ def loadSecretome(portal):
                 databaseNames=databases,
                 timesMapped=timesMapped
             )
+    transaction.commit()
     with pkg_resources.resource_stream(__name__, 'data/mappedIDs.csv') as infile:
         rows = csv.DictReader(infile)
         mappings = {}
@@ -80,8 +81,10 @@ def loadSecretome(portal):
                 databaseNames=list(mapping.databases),
                 probesetMappings=list(mapping.probesets)
             )
+    transaction.commit()
     _logger.info('Publishing everything')
     publish(resources)
+    transaction.commit()
 
 
 def setupImportSteps(context):
