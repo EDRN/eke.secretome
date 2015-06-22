@@ -6,7 +6,9 @@ from plone.dexterity.utils import createContentInContainer
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from ZODB.DemoStorage import DemoStorage
-import pkg_resources, csv
+import pkg_resources, csv, logging
+
+_logger = logging.getLogger(__name__)
 
 
 def publish(item, wfTool=None):
@@ -46,6 +48,7 @@ def loadSecretome(portal):
         for row in rows:
             probesetID, hgnc, timesMapped = row['hgu133plus2ID'], row['HGNC.symbol'], int(row['times.mapped.to'])
             databases = row['databases.foundin'].split(u'|')
+            _logger.info('Creating probeset %s', probesetID)
             createContentInContainer(
                 secretome,
                 'eke.secretome.probeset',
@@ -71,6 +74,7 @@ def loadSecretome(portal):
             mapping.probesets = mapping.probesets | probesets
             mappings[gene] = mapping
         for gene, mapping in mappings.iteritems():
+            _logger.info('Creating gene/protein %s', gene)
             createContentInContainer(
                 secretome,
                 'eke.secretome.geneprotein',
@@ -78,6 +82,7 @@ def loadSecretome(portal):
                 databaseNames=list(mapping.databases),
                 probesetMappings=list(mapping.probesets)
             )
+    _logger.info('Publishing everything')
     publish(resources)
 
 
