@@ -19,12 +19,10 @@ def publish(item, wfTool=None):
         item.reindexObject()
     except WorkflowException:
         pass
-    for i in item.keys():
-        try:
-            subItem = item[i]
-            publish(subItem, wfTool)
-        except AttributeError:
-            pass
+    for i in item.objectIds():
+        _logger.info('Getting child %s of item %s', i, item.id)
+        subItem = item[i]
+        publish(subItem, wfTool)
 
 
 def loadSecretome(portal):
