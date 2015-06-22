@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+Copyright 2015 California Institute of Technology. ALL RIGHTS
+RESERVED. U.S. Government Sponsorship acknowledged.
+-->
+<object name='portal_catalog' meta_type='Plone Catalog Tool'>
+    <index name='databaseNames' meta_type='KeywordIndex'>
+        <indexed_attr value='databaseNames'/>
+    </index>
+    <index name='probesetMappings' meta_type='KeywordIndex'>
+        <indexed_attr value='probesetMappings'/>
+    </index>
+    <column value='databaseNames'/>
+    <column value='probesetMappings'/>
+</object>

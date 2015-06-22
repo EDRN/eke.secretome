@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+Copyright 2015 California Institute of Technology. ALL RIGHTS
+RESERVED. U.S. Government Sponsorship acknowledged.
+-->
+<configure
+    xmlns='http://namespaces.zope.org/zope'
+    xmlns:browser='http://namespaces.zope.org/browser'
+    xmlns:grok='http://namespaces.zope.org/grok'
+    xmlns:genericsetup='http://namespaces.zope.org/genericsetup'
+    xmlns:zcml='http://namespaces.zope.org/zcml'
+    xmlns:faceted='http://namespaces.zope.org/faceted'
+    i18n_domain='eke.secretome'>
+    <include package='z3c.autoinclude' file='meta.zcml' />
+    <includeDependencies package='.' />
+    <grok:grok package='.' />
+    <genericsetup:registerProfile
+        name='default'
+        title='EKE: Secretome'
+        directory='profiles/default'
+        description='Secreted molecules and elements by cells, tissues, organs, and organisms for the EKE'
+        provides='Products.GenericSetup.interfaces.EXTENSION'
+    />
+    <browser:resourceDirectory name='eke.secretome' directory='static'/>
+    <faceted:view
+        name='faceted_secretome_view'
+        template='templates/faceted_secretome_view.pt'
+        title='Faceted Secretome View'
+        permission='zope2.View'
+    />
+    <genericsetup:importStep
+        name='eke.secretome'
+        title='EKE Secretome — Custom Import Handlers'
+        description='Loads up initial set of secretome data'
+        handler='eke.secretome.setuphandlers.setupImportSteps'
+    />
+    <include
+        zcml:condition='installed Products.GenericSetup.upgrade'
+        file='upgrades.zcml'
+    />
+</configure>

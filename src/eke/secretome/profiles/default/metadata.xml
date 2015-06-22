@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+Copyright 2015 California Institute of Technology. ALL RIGHTS
+RESERVED. U.S. Government Sponsorship acknowledged.
+-->
+<metadata>
+    <version>0</version>
+    <description>Secretome for the EDRN Knowledge Environment</description>
+    <dependencies>
+        <dependency>profile-eea.facetednavigation:default</dependency>
+    </dependencies>
+</metadata>
